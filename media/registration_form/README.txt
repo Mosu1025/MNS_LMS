@@ -1,0 +1,1 @@
+The produced registration slip PDF files are kept in this directory.
