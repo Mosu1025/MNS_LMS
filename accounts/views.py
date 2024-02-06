@@ -212,9 +212,9 @@ def staff_add_view(request):
         form = StaffAddForm(request.POST)
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
-     
+
         if form.is_valid():
-            
+
             form.save()
             messages.success(
                 request,
@@ -275,7 +275,12 @@ class LecturerFilterView(FilterView):
         return context
 
 
-
+# @login_required
+# @lecturer_required
+# def delete_staff(request, pk):
+#     staff = get_object_or_404(User, pk=pk)
+#     staff.delete()
+#     return redirect('lecturer_list')
 
 
 @login_required
@@ -349,6 +354,7 @@ def edit_student(request, pk):
 
 @method_decorator([login_required, admin_required], name="dispatch")
 class StudentListView(FilterView):
+    queryset = Student.objects.all()
     filterset_class = StudentFilter
     template_name = "accounts/student_list.html"
     paginate_by = 10
@@ -378,3 +384,11 @@ class ParentAdd(CreateView):
     template_name = "accounts/parent_form.html"
 
 
+# def parent_add(request):
+#     if request.method == 'POST':
+#         form = ParentAddForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('student_list')
+#     else:
+#         form = ParentAddForm(request.POST)

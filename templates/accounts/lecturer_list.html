@@ -17,7 +17,7 @@
 {% endif %}
 
 <p class="title-1"><i class="fas fa-chalkboard-teacher"></i>Lecturers</p>
-
+{% include 'snippets/messages.html' %}
 {% if messages %}
     {% for message in messages %}
         {% if message.tags == 'error' %}

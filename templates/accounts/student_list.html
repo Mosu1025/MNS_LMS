@@ -22,7 +22,7 @@
 <div class="title-1"><i class="fas fa-user-graduate"></i>Students</div>
 <br>
 <br>
-{% if messages %}
+<!--{% if messages %}
     {% for message in messages %}
         {% if message.tags == 'error' %}
             <div class="alert alert-danger">
@@ -34,8 +34,8 @@
             </div>
         {% endif %}
     {% endfor %}
-{% endif %}
-
+{% endif %}-->
+{% include 'snippets/messages.html' %}
 {% include 'snippets/filter_form.html' %}
 
 <div class="table-responsive table-shadow table-light table-striped m-0 mt-4">

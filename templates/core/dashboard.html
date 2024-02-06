@@ -305,6 +305,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+	const malesCount = {{ males_count }}
+	const femalesCount = {{ females_count }}
 	$(document).ready(function () {
 
 		// Setup
@@ -478,7 +480,7 @@
 			],
 			datasets: [{
 				label: "Students Gender Dataset",
-				data: [{{ males_count }}, {{ females_count }}],
+				data: [malesCount , femalesCount],
 				backgroundColor: [
 				'rgb(37, 36, 34)',
 				'rgb(235, 94, 40)'

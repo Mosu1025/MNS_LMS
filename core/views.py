@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 
 from accounts.decorators import admin_required, lecturer_required
 from accounts.models import User, Student
 from .forms import SessionForm, SemesterForm, NewsAndEventsForm
-from .models import *
+from .models import NewsAndEvents, ActivityLog, Session, Semester
 
 
 # ########################################################
@@ -28,9 +27,9 @@ def dashboard_view(request):
     logs = ActivityLog.objects.all().order_by("-created_at")[:10]
     gender_count = Student.get_gender_count()
     context = {
-        "student_count": User.get_student_count(),
-        "lecturer_count": User.get_lecturer_count(),
-        "superuser_count": User.get_superuser_count(),
+        "student_count": User.objects.get_student_count(),
+        "lecturer_count": User.objects.get_lecturer_count(),
+        "superuser_count": User.objects.get_superuser_count(),
         "males_count": gender_count["M"],
         "females_count": gender_count["F"],
         "logs": logs,
@@ -118,7 +117,7 @@ def session_add_view(request):
         if form.is_valid():
             data = form.data.get(
                 "is_current_session"
-            )  # returns 'True' as a string if the user chose to accept
+            )  # returns string of 'True' if the user selected Yes
             print(data)
             if data == "true":
                 sessions = Session.objects.all()
@@ -214,7 +213,7 @@ def semester_add_view(request):
         if form.is_valid():
             data = form.data.get(
                 "is_current_semester"
-            )  # returns 'True' as a string if the user chose to accept
+            )  # returns string of 'True' if the user selected Yes
             if data == "True":
                 semester = form.data.get("semester")
                 ss = form.data.get("session")
@@ -271,7 +270,7 @@ def semester_update_view(request, pk):
     if request.method == "POST":
         if (
             request.POST.get("is_current_semester") == "True"
-        ):  # 'True' is returned if the user checked the box next to 'is current semester.'
+        ):  # returns string of 'True' if the user selected yes for 'is current semester'
             unset_semester = Semester.objects.get(is_current_semester=True)
             unset_semester.is_current_semester = False
             unset_semester.save()
